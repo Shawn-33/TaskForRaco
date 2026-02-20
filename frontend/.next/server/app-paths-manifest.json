@@ -1,8 +1,10 @@
 {
-  "/buyer/projects/[id]/manage/page": "app/buyer/projects/[id]/manage/page.js",
+  "/auth/login/page": "app/auth/login/page.js",
+  "/buyer/dashboard/page": "app/buyer/dashboard/page.js",
+  "/marketplace/page": "app/marketplace/page.js",
   "/solver/dashboard/page": "app/solver/dashboard/page.js",
   "/solver/project/[id]/page": "app/solver/project/[id]/page.js",
-  "/buyer/dashboard/page": "app/buyer/dashboard/page.js",
-  "/auth/login/page": "app/auth/login/page.js",
-  "/page": "app/page.js"
+  "/page": "app/page.js",
+  "/project/[id]/page": "app/project/[id]/page.js",
+  "/buyer/projects/[id]/manage/page": "app/buyer/projects/[id]/manage/page.js"
 }

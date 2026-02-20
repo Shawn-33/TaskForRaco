@@ -27,6 +27,7 @@ class ProjectResponse(ProjectBase):
     assigned_solver_id: Optional[int] = None
     created_at: datetime
     updated_at: datetime
+    pending_applications: Optional[int] = 0
     
     class Config:
         from_attributes = True

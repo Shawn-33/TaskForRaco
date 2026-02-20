@@ -99,7 +99,10 @@ export default function SolverProjectPage() {
   const handleCreateTask = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await apiClient.createTask(taskFormData);
+      await apiClient.createTask({
+        ...taskFormData,
+        project_id: projectId,
+      });
       setTaskFormData({ title: '', description: '', deadline: '' });
       setShowTaskForm(false);
       loadProjectData();

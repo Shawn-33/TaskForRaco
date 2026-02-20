@@ -32,6 +32,7 @@ export default function SolverTasksPage() {
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [uploadingTaskId, setUploadingTaskId] = useState<number | null>(null);
   const [formData, setFormData] = useState({
+    project_id: '',
     title: '',
     description: '',
     deadline: '',
@@ -64,8 +65,11 @@ export default function SolverTasksPage() {
   const handleCreateTask = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await apiClient.createTask(formData);
-      setFormData({ title: '', description: '', deadline: '' });
+      await apiClient.createTask({
+        ...formData,
+        project_id: parseInt(formData.project_id),
+      });
+      setFormData({ project_id: '', title: '', description: '', deadline: '' });
       setShowCreateForm(false);
       fetchData();
       alert('Task created successfully!');
@@ -136,6 +140,23 @@ export default function SolverTasksPage() {
           <div className="card mb-8 bg-blue-50 border-blue-200">
             <h3 className="text-xl font-bold mb-4">Create New Task</h3>
             <form onSubmit={handleCreateTask} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Project *</label>
+                <select
+                  value={formData.project_id}
+                  onChange={(e) => setFormData({ ...formData, project_id: e.target.value })}
+                  required
+                  className="input-field"
+                >
+                  <option value="">Select a project</option>
+                  {projects.map((project) => (
+                    <option key={project.id} value={project.id}>
+                      {project.title}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Task Title *</label>
                 <input
@@ -215,7 +236,6 @@ export default function SolverTasksPage() {
           <div className="space-y-4">
             {tasks.map((task) => {
               const statusInfo = getStatusInfo(task.status);
-              const StatusIcon = statusInfo.icon;
               const project = projects.find((p) => p.id === task.project_id);
 
               return (

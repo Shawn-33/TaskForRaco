@@ -44,12 +44,45 @@ def get_my_projects(
     skip: int = 0,
     limit: int = 100
 ):
-    """Get all projects created by the buyer."""
-    projects = db.query(Project).filter(
+    """Get all projects created by the buyer with application counts."""
+    from sqlalchemy import func
+    
+    # Get projects with pending application counts
+    projects = db.query(
+        Project,
+        func.count(ProjectRequest.id).label('pending_applications')
+    ).outerjoin(
+        ProjectRequest,
+        and_(
+            ProjectRequest.project_id == Project.id,
+            ProjectRequest.status == 'pending'
+        )
+    ).filter(
         Project.buyer_id == current_user.id
+    ).group_by(Project.id).order_by(
+        func.count(ProjectRequest.id).desc(),  # Projects with more pending apps first
+        Project.created_at.desc()
     ).offset(skip).limit(limit).all()
     
-    return projects
+    # Convert to response format with pending_applications count
+    result = []
+    for project, pending_count in projects:
+        project_dict = {
+            "id": project.id,
+            "title": project.title,
+            "description": project.description,
+            "category": project.category,
+            "budget": project.budget,
+            "status": project.status,
+            "buyer_id": project.buyer_id,
+            "assigned_solver_id": project.assigned_solver_id,
+            "created_at": project.created_at,
+            "updated_at": project.updated_at,
+            "pending_applications": pending_count
+        }
+        result.append(project_dict)
+    
+    return result
 
 @router.get("/projects/{project_id}", response_model=ProjectDetailResponse)
 def get_project(

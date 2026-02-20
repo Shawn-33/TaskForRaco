@@ -9,7 +9,7 @@ class TaskBase(BaseModel):
     deadline: Optional[date] = None
 
 class TaskCreate(TaskBase):
-    pass
+    project_id: int
 
 class TaskUpdate(BaseModel):
     title: Optional[str] = None

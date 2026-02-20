@@ -16,6 +16,16 @@
       "static/chunks/main-app.js",
       "static/chunks/app/auth/login/page.js"
     ],
+    "/admin/dashboard/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/admin/dashboard/page.js"
+    ],
+    "/buyer/dashboard/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/buyer/dashboard/page.js"
+    ],
     "/solver/dashboard/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -31,20 +41,15 @@
       "static/chunks/main-app.js",
       "static/chunks/app/project/[id]/page.js"
     ],
-    "/buyer/dashboard/page": [
+    "/buyer/projects/new/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/buyer/dashboard/page.js"
+      "static/chunks/app/buyer/projects/new/page.js"
     ],
     "/buyer/projects/[id]/manage/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/buyer/projects/[id]/manage/page.js"
-    ],
-    "/profile/solver/[id]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/profile/solver/[id]/page.js"
     ],
     "/solver/project/[id]/page": [
       "static/chunks/webpack.js",

@@ -161,9 +161,10 @@ def create_task(
     db: Session = Depends(get_db)
 ):
     """Create a task/sub-module (only for assigned projects)."""
-    # Verify user has an assigned project
+    # Verify user has access to this specific project
     project = db.query(Project).filter(
         and_(
+            Project.id == task_data.project_id,
             Project.assigned_solver_id == current_user.id,
             Project.status.in_([ProjectStatus.ASSIGNED, ProjectStatus.IN_PROGRESS])
         )
@@ -172,11 +173,11 @@ def create_task(
     if not project:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="You don't have an assigned project"
+            detail="Project not found or not assigned to you"
         )
     
     new_task = Task(
-        project_id=project.id,
+        project_id=task_data.project_id,
         problem_solver_id=current_user.id,
         title=task_data.title,
         description=task_data.description,
